@@ -16,7 +16,7 @@ contract CauseFactory
         return id ;
     }
 
-    function isLevelUnique( string memory _name) internal view returns(bool)
+    function isCauseUnique( string memory _name) internal view returns(bool)
     {
         for (uint i=0 ; i< causes.length ; i++)
         {
@@ -28,18 +28,18 @@ contract CauseFactory
         return true ;
     }
 
-    function createLevel(string memory _name,string memory _description,string memory _imageUrl,address _issuer_addr, uint256 _amount_to_raise) public 
+    function createCause(string memory _name,string memory _description,string memory _imageUrl,address _issuer_addr, uint256 _amount_to_raise) public 
     {
-        if(isLevelUnique(_levelName))
+        if(isCauseUnique(_levelName))
         {
-            Level level = new Level(id);
-            level.setLevelName(_levelName);
-            level.setDescription(_description);
-            level.setImageUrl(_imageUrl);
-            level.setPlacesLeft(_placesLeft);
-            level.setPathId(_pathId);
-            levels.push(level) ;
-            emit levelCreated(id,_levelName,_description,_imageUrl,_placesLeft,_pathId);
+            Cause cause = new Cause(id);
+            cause.setName(_name);
+            cause.setDescription(_description);
+            cause.setImageUrl(_imageUrl);
+            cause.setIssuerAddress(_issuer_addr);
+            cause.setAmountToRaise(_amount_to_raise);
+            causes.push(cause) ;
+            emit causeCreated(id,_name,_description,_imageUrl,_issuer_addr,_amount_to_raise);
             id++ ; 
         }
         else 
@@ -49,26 +49,26 @@ contract CauseFactory
     }
 
 
-    function getLevelsLength() public view returns(uint256)
+    function getCausesLength() public view returns(uint256)
     {
         return id ;
     }
 
-    function getLevelById(uint16 _id) public view returns (uint16,string memory,string memory,string memory,uint16, uint16)
+    function getCausesById(uint16 _id) public view returns (uint16,string memory,string memory,string memory,uint16, uint16)
     {
-        for (uint256 i=0; i< levels.length ;i++)
+        for (uint256 i=0; i< causes.length ;i++)
         {
-            if (levels[i].getLevelId()==_id)
+            if (levels[i].getCauseId()==_id)
             {
-                return (levels[i].getLevelId(),levels[i].getLevelName(),levels[i].getDescription(),levels[i].getImageUrl(),levels[i].getPlacesLeft(),levels[i].getPathId());
+                return (causes[i].getCausesId(),causes[i].getName(),causes[i].getDescription(),causes[i].getImageUrl(),causes[i].getIssuerAddress(),levels[i].getAmountToRaise());
             }
         }
-        revert('Level with this id is not Not found');
+        revert('Cause with this id is not Not found');
     }
 
-    function getLevelObjectById(uint16 _id) public view returns(Level)
+    function getCauseObjectById(uint16 _id) public view returns(Level)
     {
-        return levels[_id];
+        return causes[_id];
     }
 
     //function donate 
