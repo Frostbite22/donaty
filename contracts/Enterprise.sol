@@ -11,6 +11,7 @@ contract Enterprise is AbstractUser
     string private matricule ; 
     uint16 private id ; 
     address private account ; 
+    string private kind = "enterprise" ; 
 
     constructor(uint16 _id)
     {
@@ -52,6 +53,11 @@ contract Enterprise is AbstractUser
     function setAddress(address _account)  override public
     {
         account = _account ;
+    }
+
+     function getKind()  public view returns(string memory) 
+    {
+        return kind ;
     }
 
 }

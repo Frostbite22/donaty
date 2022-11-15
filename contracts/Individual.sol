@@ -11,6 +11,8 @@ contract Individual is AbstractUser
     string private lastName ; 
     uint16 private id ; 
     address private account ; 
+    string private kind = "individual" ; 
+
 
     constructor(uint16 _id)
     {
@@ -52,5 +54,11 @@ contract Individual is AbstractUser
     {
         account = _account ;
     }
+    
+    function getKind()  public view returns(string memory) 
+    {
+        return kind ;
+    }
+
 
 }

@@ -31,52 +31,54 @@ const main = async () => {
     console.log(`created enterprise with id ${id} firstName ${ent_name} with acc ${account} and matricule ${matricule}`);
 
 
-//       // create admin Factory contract 
-//       const adminContractFactory = await hre.ethers.getContractFactory("AdminFactory");
+      // create an Individual Factory contract 
+      const individuContractFactory = await hre.ethers.getContractFactory("IndividualFactory");
 
-//       const adminContract = await adminContractFactory.deploy();
-//       await adminContract.deployed();
+      const individuContract = await individuContractFactory.deploy();
+      await individuContract.deployed();
   
-//       // verify deployment of admin contracts
-//       if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
-//       {
-//         console.log("Waiting for block confirmations ...");
-//         await adminContract.deployTransaction.wait(6);
-//         await verify(adminContract.address,[]);
-//       }
+      // verify deployment of individual contracts
+      if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
+      {
+        console.log("Waiting for block confirmations ...");
+        await individuContract.deployTransaction.wait(6);
+        await verify(individuContract.address,[]);
+      }
   
-//       console.log(`Deployed contract to: ${adminContract.address}`);
+      console.log(`Deployed contract to: ${individuContract.address}`);
   
-//       // creating an admin
+      // creating an individual
   
-//       const adminToCreate = await adminContract.createAdmin("Saydo","hamdi","sayedtkd@gmail.tn","0x11ec5aDb332d4Ada2ba6C0a1E87f4B491841Eb78")
-//       const admin = await adminToCreate.wait();
-//       const eventAdmin = admin.events.find(event => event.event === 'adminCreated');
-//       const [idAdm, firstAdm,lastAdm,accountAdm,emailAdm] = eventAdmin.args;
+      const individuToCreate = await individuContract.createIndividual("momo","bechi5","0x4420F374a97077357272734d8753d28E6346B341")
+      const individu = await individuToCreate.wait();
+      const eventIndividu = individu.events.find(event => event.event === 'individualCreated');
+      const [idIndividu, first,last,accountIndividu] = eventIndividu.args;
 
-//       console.log(`created admin with id ${idAdm} firstName ${firstAdm} and lastName ${lastAdm} with acc ${accountAdm} and email ${emailAdm}`);
+      console.log(`created individu with id ${idIndividu} firstName ${first} and lastName ${last} with acc ${accountIndividu} `);
 
-//     // deploying path contract
-//     const pathContractFactory = await hre.ethers.getContractFactory("PathFactory");
-//     const pathContract = await pathContractFactory.deploy();
-//     await pathContract.deployed(); 
+    // deploying cause contract
+    const causeContractFactory = await hre.ethers.getContractFactory("CauseFactory");
+    const causeContract = await causeContractFactory.deploy();
+    await causeContract.deployed(); 
 
 
-//     // verify deployment of pathContract contracts
-//     if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
-//     {
-//       console.log("Waiting for block confirmations ...");
-//       await pathContract.deployTransaction.wait(6);
-//       await verify(pathContract.address,[]);
-//     }
+    // verify deployment of CauseContract contracts
+    if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
+    {
+      console.log("Waiting for block confirmations ...");
+      await causeContract.deployTransaction.wait(6);
+      await verify(causeContract.address,[]);
+    }
 
-//     // creating a path
+    // creating a path
 
-//     const createPathTxn = await pathContract.createPath("fullstack dev","front and back dev","https://img.freepik.com/premium-vector/full-stack-developer-working-computer-vector-illustration-it-professional-web-developer-programmi_103044-1164.jpg");
-//     const path= await createPathTxn.wait(); 
-//     const eventPath = path.events.find(event => event.event ==='pathCreated');
-//     const [id_path,pathName,description,url] = eventPath.args ;
-//     console.log(`path created with id ${id_path} and name ${pathName} : ${description} , ${url} `);
+    const createCauseTxn = await causeContract.createCause("deforestation in Chaanbi",
+    "Chaanbi is facing huge issues concerning deforestation","https://upload.wikimedia.org/wikipedia/commons/a/a8/Chambi1.JPG",
+    "0x4420F374a97077357272734d8753d28E6346B341",10000);
+    const cause= await createCauseTxn.wait(); 
+    const eventCause = cause.events.find(event => event.event ==='causeCreated');
+    const [id_cause,causeName,description,url,issuer_adr,amount] = eventCause.args ;
+    console.log(`cause created with id ${id_cause} and name ${causeName} : ${description} , ${url}, issuer: ${issuer_adr}, amount : ${amount} `);
     
 //     // deploy the level contract 
 //     const levelContractFactory = await hre.ethers.getContractFactory("LevelFactory");
