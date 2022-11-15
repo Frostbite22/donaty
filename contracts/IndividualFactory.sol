@@ -11,12 +11,12 @@ contract IndividualFactory
 {
     
     uint16 private id ; 
-    AbstractUser[] individuals ;
+    Individual[] individuals ;
     event individualCreated (uint16,string, string,address);
 
     function isIndividualUnique(address _account) public view returns(bool)
     {
-        for (uint i=0 ; i< Individuals.length ; i++)
+        for (uint i=0 ; i< individuals.length ; i++)
         {
             if (_account == individuals[i].getAddress())         
             {
@@ -30,12 +30,12 @@ contract IndividualFactory
     {
         if(isIndividualUnique(_account))
         {
-            AbstractUser ind = new Individual(id) ;
+            Individual ind = new Individual(id) ;
             ind.setFirstName(_firstName);
             ind.setLastName(_lastName);  
             ind.setAddress(_account);
             individuals.push(ind);
-            emit IndividualCreated(id,_firstName,_lastName,_account);
+            emit individualCreated(id,_firstName,_lastName,_account);
             id++ ;
         }
         else 

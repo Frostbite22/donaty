@@ -6,9 +6,6 @@ require("hardhat-gas-reporter");
 require('solidity-coverage')
 
 
-
-
-const QUICKNODE_API_URL = process.env.QUICKNODE_API_URL;
 const ACCOUNT_PK = process.env.ACCOUNT_PK;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY ;
 const COINMARKETCAP_API_KEY= process.env.COINMARKETCAP_API_KEY ;

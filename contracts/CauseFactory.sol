@@ -30,7 +30,7 @@ contract CauseFactory
 
     function createCause(string memory _name,string memory _description,string memory _imageUrl,address _issuer_addr, uint256 _amount_to_raise) public 
     {
-        if(isCauseUnique(_levelName))
+        if(isCauseUnique(_name))
         {
             Cause cause = new Cause(id);
             cause.setName(_name);
@@ -54,19 +54,19 @@ contract CauseFactory
         return id ;
     }
 
-    function getCausesById(uint16 _id) public view returns (uint16,string memory,string memory,string memory,uint16, uint16)
+    function getCausesById(uint16 _id) public view returns (uint16,string memory,string memory,string memory,address, uint256)
     {
         for (uint256 i=0; i< causes.length ;i++)
         {
-            if (levels[i].getCauseId()==_id)
+            if (causes[i].getCauseId()==_id)
             {
-                return (causes[i].getCausesId(),causes[i].getName(),causes[i].getDescription(),causes[i].getImageUrl(),causes[i].getIssuerAddress(),levels[i].getAmountToRaise());
+                return (causes[i].getCauseId(),causes[i].getName(),causes[i].getDescription(),causes[i].getImageUrl(),causes[i].getIssuerAddress(),causes[i].getAmountToRaise());
             }
         }
         revert('Cause with this id is not Not found');
     }
 
-    function getCauseObjectById(uint16 _id) public view returns(Level)
+    function getCauseObjectById(uint16 _id) public view returns(Cause)
     {
         return causes[_id];
     }

@@ -11,7 +11,7 @@ contract EnterpriseFactory
 {
     
     uint16 private id ; 
-    AbstractUser[] enterprises ;
+    Enterprise[] enterprises ;
     event enterpriseCreated (uint16,string, string,address);
 
     function isEnterpriseUnique(address _account) public view returns(bool)
@@ -30,12 +30,12 @@ contract EnterpriseFactory
     {
         if(isEnterpriseUnique(_account))
         {
-            AbstractUser ent = new Enterprise(id) ;
+            Enterprise ent = new Enterprise(id) ;
             ent.setName(_name);
-            std.setMatricule(_matricule);  
-            std.setAddress(_account);
-            enterprises.push(std);
-            emit EnterpriseCreated(id,_name,_matricule,_account);
+            ent.setMatricule(_matricule);  
+            ent.setAddress(_account);
+            enterprises.push(ent);
+            emit enterpriseCreated(id,_name,_matricule,_account);
             id++ ;
         }
         else 
@@ -50,7 +50,7 @@ contract EnterpriseFactory
         return enterprises.length ;
     }
 
-    function getEnterpriseById(uint16 _id) public view returns (uint16,string memory, string memory,address,string memory)
+    function getEnterpriseById(uint16 _id) public view returns (uint16,string memory, string memory,address)
     {
         for (uint256 i=0; i<enterprises.length ;i++)
         {

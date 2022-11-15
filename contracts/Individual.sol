@@ -18,7 +18,7 @@ contract Individual is AbstractUser
     }
 
 
-    function setFirstName(string calldata _fn)  override public 
+    function setFirstName(string calldata _fn)  public 
     {
         firstName = _fn ;
     }
@@ -28,7 +28,7 @@ contract Individual is AbstractUser
         return firstName ;
     }
 
-    function setLastName(string calldata _ln)  override public
+    function setLastName(string calldata _ln)  public
     {
         lastName = _ln ;
     }

@@ -105,7 +105,8 @@ contract Cause
             donors_to_amount_donated[msg.sender] += amount ; 
             uint256 raised = getRaisedAmount();
             setRaisedAmount(raised+amount);
-            for(uint i=0 ; i < donors.length ; i++)
+            uint256 i = 0 ;
+            for(i=0 ; i < donors.length ; i++)
             {
                 if(donors[i] == msg.sender)
                 {
