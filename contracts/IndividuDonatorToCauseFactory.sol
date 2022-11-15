@@ -7,23 +7,12 @@ pragma experimental ABIEncoderV2;
 import "hardhat/console.sol";
 import "./IndividuDonatorToCause.sol" ;
 
-contract StudentLevelFactory 
+contract IndividuDonatorToCauseFactory 
 {
     uint16 private id ; 
     IndividuDonatorToCause[] individuDonatorToCause ;
     event individuDonatorToCauseCreated (uint16,uint16, uint16);
 
-     function isIndividuDonatorToCauseUnique(uint16 _individuId, uint16 _causeId) public view returns(bool)
-    {
-        for (uint i=0 ; i< individuDonatorToCause.length ; i++)
-        {
-            if (_individuId == individuDonatorToCause[i].getIndividuId() && _causeId == individuDonatorToCause[i].getCauseId() )         
-            {
-                return false ;
-            }
-        }
-        return true ;
-    }
     function createindividuDonatorToCause(uint16 _individuId, uint16 _causeId) public 
     {
        

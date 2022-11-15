@@ -4,9 +4,8 @@ pragma solidity ^0.8.9;
 // Import this file to use console.log
 import "hardhat/console.sol";
 import "./Cause.sol";
-import "./IndividualFactory.sol" ;
 
-contract IndividuDonatorToCause
+contract EnterpriseDonatorToCause
 {
     uint16 private enterpriseId ;
     uint16 private causeId ;
