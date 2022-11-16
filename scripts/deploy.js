@@ -160,24 +160,24 @@ const main = async () => {
 
 // }
 
-// async function verify(contractAddress,args)
-// {
-//   console.log("Verifying contract ..");
-//   try{
-//   await run("verify:verify", {
-//     address : contractAddress,
-//     constructor : args 
-//   })
-//   }catch (e){
-//     if (e.message.toLowerCase().includes("already verified"))
-//     {
-//       console.log("already verified");
-//     }
-//     else 
-//     {
-//       console.log(e);
-//     }
-//   }
+async function verify(contractAddress,args)
+{
+  console.log("Verifying contract ..");
+  try{
+  await run("verify:verify", {
+    address : contractAddress,
+    constructor : args 
+  })
+  }catch (e){
+    if (e.message.toLowerCase().includes("already verified"))
+    {
+      console.log("already verified");
+    }
+    else 
+    {
+      console.log(e);
+    }
+  }
 
 }
 
@@ -186,4 +186,4 @@ const main = async () => {
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
-});
+})}

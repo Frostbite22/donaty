@@ -55,7 +55,7 @@ contract Enterprise is AbstractUser
         account = _account ;
     }
 
-     function getKind()  public view returns(string memory) 
+    function getKind()  public view returns(string memory) 
     {
         return kind ;
     }
