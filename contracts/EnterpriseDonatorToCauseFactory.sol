@@ -13,7 +13,7 @@ contract EnterpriseDonatorToCauseFactory
     EnterpriseDonatorToCause[] enterpriseDonatorToCause ;
     event enterpriseDonatorToCauseCreated (uint16,uint16, uint16);
 
-    function individuDonatorToCauseCreated(uint16 _enterpriseId, uint16 _causeId) public 
+    function createEnterpriseDonatorToCause(uint16 _enterpriseId, uint16 _causeId) public 
     {
         EnterpriseDonatorToCause entCause = new EnterpriseDonatorToCause(id,_enterpriseId,_causeId);
         enterpriseDonatorToCause.push(entCause);

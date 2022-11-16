@@ -26,9 +26,9 @@ const main = async () => {
     const enterpriseToCreate = await enterpriseContract.createEnterprise("sofrecom","123/*/456/*","0x11ec5aDb332d4Ada2ba6C0a1E87f4B491841Eb78")
     const enterprise = await enterpriseToCreate.wait();
     const event = enterprise.events.find(event => event.event === 'enterpriseCreated');
-    const [id, ent_name,matricule,account] = event.args;
+    const [id_ent, ent_name,matricule,account] = event.args;
 
-    console.log(`created enterprise with id ${id} firstName ${ent_name} with acc ${account} and matricule ${matricule}`);
+    console.log(`created enterprise with id ${id_ent} firstName ${ent_name} with acc ${account} and matricule ${matricule}`);
 
 
       // create an Individual Factory contract 
@@ -70,7 +70,7 @@ const main = async () => {
       await verify(causeContract.address,[]);
     }
 
-    // creating a path
+    // creating a cause
 
     const createCauseTxn = await causeContract.createCause("deforestation in Chaanbi",
     "Chaanbi is facing huge issues concerning deforestation","https://upload.wikimedia.org/wikipedia/commons/a/a8/Chambi1.JPG",
@@ -80,78 +80,69 @@ const main = async () => {
     const [id_cause,causeName,description,url,issuer_adr,amount] = eventCause.args ;
     console.log(`cause created with id ${id_cause} and name ${causeName} : ${description} , ${url}, issuer: ${issuer_adr}, amount : ${amount} `);
     
-//     // deploy the level contract 
-//     const levelContractFactory = await hre.ethers.getContractFactory("LevelFactory");
-//     const levelContract = await levelContractFactory.deploy();
-//     await levelContract.deployed(); 
-    
-//     // verify deployment of levelContract contracts
-//     if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
-//     {
-//       console.log("Waiting for block confirmations ...");
-//       await levelContract.deployTransaction.wait(6);
-//       await verify(levelContract.address,[]);
-//     }
-    
 
-//     // creating a level for that path
-//     const createLevelTxn = await levelContract.createLevel("backend lvl1","backend dev nodejs","https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/edit/ne/2021/07/NodeJS.jpg",20,id_path);
-//     const level= await createLevelTxn.wait(); 
-//     const eventLevel = level.events.find(event => event.event ==='levelCreated');
-//     const [id_level,levelName,description_lvl,url_lvl,nb_places,id_path_fk] = eventLevel.args ;
-//     console.log(`level created with id ${id_level} and name ${levelName} : ${description_lvl} , ${url_lvl} with nbplace ${nb_places} with path id ${id_path_fk}`);
+    //deploy individu donator to cause factory 
+    const indivToCauseContractFactory = await hre.ethers.getContractFactory("IndividuDonatorToCauseFactory");
 
-//     // session contract deployment
-//     const sessionContractFactory = await hre.ethers.getContractFactory("SessionFactory");
-//     const sessionContract = await sessionContractFactory.deploy();
-//     await sessionContract.deployed(); 
+    const indivToCauseContract = await indivToCauseContractFactory.deploy();
+    await indivToCauseContract.deployed();
 
-//     // verify deployment of session contracts
-//     if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
-//     {
-//       console.log("Waiting for block confirmations ...");
-//       await sessionContract.deployTransaction.wait(6);
-//       await verify(sessionContract.address,[]);
-//     }
+    // verify deployment of enterprise contracts
+    if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
+    {
+      console.log("Waiting for block confirmations ...");
+      await indivToCauseContract.deployTransaction.wait(6);
+      await verify(indivToCauseContract.address,[]);
+    }
 
-//     // creating a session for that level
+    console.log(`Deployed contract to: ${indivToCauseContract.address}`);
+  
 
-//     const dat = new Date(2022,12,25,14,30,0);
-//     const createSessTxn = await sessionContract.createSession("session one : js",dat.getTime()/1000,id_level);
+    // enterprise donator to cause factory 
+    const enterToCauseContractFactory = await hre.ethers.getContractFactory("EnterpriseDonatorToCauseFactory");
 
-//     const session = await createSessTxn.wait(); 
-//     const eventSession = session.events.find(event => event.event ==='sessionCreated');
-//     const [id_sess,name,date,level_id_fk] = eventSession.args ;
-//     const response_date = new Date(date*1000)
-//     console.log(`session created with id ${id_sess} with name ${name} and date ${response_date} and level id : ${level_id_fk} `);
+    const enterToCauseContract = await enterToCauseContractFactory.deploy();
+    await enterToCauseContract.deployed();
 
-//     const createSess2Txn = await sessionContract.createSession("session two : react",dat.getTime()/1000,id_level);
-//     const session2 = await createSess2Txn.wait(); 
-//     const eventSession2 = session2.events.find(event => event.event ==='sessionCreated');
-//     const [id_sess2,name2,date2,level_id_fk_2] = eventSession2.args ;
-//     const response_date2 = new Date(date2*1000)
+    // verify deployment of enterprise contracts
+    if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
+    {
+      console.log("Waiting for block confirmations ...");
+      await enterToCauseContract.deployTransaction.wait(6);
+      await verify(enterToCauseContract.address,[]);
+    }
 
-//     console.log(`session created with id ${id_sess2} with name ${name2} and date ${response_date2} and level id : ${level_id_fk_2}`);
+    console.log(`Deployed contract to: ${enterToCauseContract.address}`);
 
 
-//     // studentToLevel contract 
-//     const stdToLvlContractFactory = await hre.ethers.getContractFactory("StudentLevelFactory");
-//     const stdToLvlContract = await stdToLvlContractFactory.deploy();
-//     await stdToLvlContract.deployed(); 
 
-//     // verify deployment of studentToSession contracts
-//     if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
-//     {
-//       console.log("Waiting for block confirmations ...");
-//       await stdToLvlContract.deployTransaction.wait(6);
-//       await verify(stdToLvlContract.address,[]);
-//     }
+    const userToCauseTnx = await enterToCauseContract.createEnterpriseDonatorToCause(id_ent,id_cause) ;
+    const userToCause = await userToCauseTnx.wait(); 
+    const eventUserToCause = userToCause.events.find(event => event.event ==='enterpriseDonatorToCauseCreated');
+    const [id,enter_id,cause_id] = eventUserToCause.args ;
+    console.log(`Enterprise donor donated to cause ${id} : enterpriseId ${enter_id} : causeId ${cause_id} `); 
 
-//     const stdToLevelTnx = await stdToLvlContract.createStudentLevel(id,id_level,levelContract.address) ;
-//     const stdToLvl = await stdToLevelTnx.wait(); 
-//     const eventStdToLvl = stdToLvl.events.find(event => event.event ==='studentLevelCreated');
-//     const [id_std_session,studentId,levelId] = eventStdToLvl.args ;
-//     console.log(`student added to level ${id_std_session} : ${studentId} : ${levelId} `); 
+
+    // user donator to cause factory 
+
+
+    // const userDonatorToCauseContractFactory = await hre.ethers.getContractFactory("UserDonatorToCauseFactory");
+    // const userDonatorToCauseContract = await userDonatorToCauseContractFactory.deploy();
+    // await userDonatorToCauseContract.deployed(); 
+
+    // // verify deployment of userToCause contracts
+    // if (network.config.chainId===5 && process.env.ETHERSCAN_API_KEY)
+    // {
+    //   console.log("Waiting for block confirmations ...");
+    //   await userDonatorToCauseContract.deployTransaction.wait(6);
+    //   await verify(userDonatorToCauseContract.address,[]);
+    // }
+
+    // const userToCauseTnx = await userDonatorToCauseContract.createUserDonatorToCause(id_ent,id_cause,"enterprise",enterToCauseContract.address,indivToCauseContract.address) ;
+    // const userToCause = await userToCauseTnx.wait(); 
+    // const eventUserToCause = userToCause.events.find(event => event.event ==='enterpriseDonatorToCauseCreated');
+    // const [id,enter_id,cause_id] = eventUserToCause.args ;
+    // console.log(`Enterprise donor donated to cause ${id} : enterpriseId ${enter_id} : causeId ${cause_id} `); 
 
 
 //     const levelCheck = await levelContract.getLevelById(id_level) ;

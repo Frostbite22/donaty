@@ -13,7 +13,7 @@ contract IndividuDonatorToCauseFactory
     IndividuDonatorToCause[] individuDonatorToCause ;
     event individuDonatorToCauseCreated (uint16,uint16, uint16);
 
-    function createindividuDonatorToCause(uint16 _individuId, uint16 _causeId) public 
+    function createIndividuDonatorToCause(uint16 _individuId, uint16 _causeId) public 
     {
        
         IndividuDonatorToCause indCause = new IndividuDonatorToCause(id,_individuId,_causeId);

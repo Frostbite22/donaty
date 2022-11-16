@@ -8,7 +8,7 @@ import "./Enterprise.sol";
 
 interface InterfEnterpriseDonatorToCauseFactory 
 {
-    function createEnterpriseDonatorToCause(uint16 _individuId, uint16 _causeId) external ;
+    function createEnterpriseDonatorToCause(uint16 _enterpriseId, uint16 _causeId) external returns(uint16,uint16,uint16) ;
     function getEnterpriseDonatorToCauseObjectById(uint16 _id) view external returns(Enterprise);
     function getEnterprisesLength() external view returns(uint256);
 
